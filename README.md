@@ -64,10 +64,14 @@ It includes:
 
 ### セットアップ
 1. PostgreSQL のデータベースを作成（例: `testdb`）
+   - `createdb testdb`
 2. 以下の順で SQL ファイルを実行
    1. `schema.sql`
+      - `psql -d testdb -f schema.sql`
    2. `insert.sql`
+      - `psql -d testdb -f insert.sql`
    3. `analysis.sql`（手動確認用、任意）
+      - `psql -d testdb -f analysis.sql`
 3. Python 依存パッケージをインストール
    - `pip install psycopg2-binary`
 4. 環境変数を設定（PowerShell 例）
