@@ -1,25 +1,25 @@
-services:
-  db:
-    image: postgres:16
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: testdb
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+services: # composeで起動するサービス一覧
+  db: # PostgreSQL用のサービス名
+    image: postgres:16 # 使用するPostgreSQLイメージ
+    environment: # DBの初期設定用環境変数
+      POSTGRES_PASSWORD: postgres # DBのパスワード
+      POSTGRES_DB: testdb # 初期作成するDB名
+    ports: # ホストとコンテナのポート公開設定
+      - "5432:5432" # ホスト5432をコンテナ5432に接続
+    volumes: # データ永続化のボリューム設定
+      - pgdata:/var/lib/postgresql/data # DBデータ保存先を指定
 
-  app:
-    build: .
-    depends_on:
-      - db
-    environment:
-      PGDATABASE: testdb
-      PGUSER: postgres
-      PGPASSWORD: postgres
-      PGHOST: db
-      PGPORT: "5432"
-    command: ["python", "main.py"]
+  app: # Pythonアプリ用のサービス名
+    build: . # Dockerfileからビルド
+    depends_on: # DB起動後にアプリを起動
+      - db # 依存先はdbサービス
+    environment: # アプリの接続設定
+      PGDATABASE: testdb # 接続先DB名
+      PGUSER: postgres # 接続ユーザー
+      PGPASSWORD: postgres # 接続パスワード
+      PGHOST: db # 接続先ホスト名
+      PGPORT: "5432" # 接続先ポート
+    command: ["python", "main.py"] # アプリ実行コマンド
 
-volumes:
-  pgdata:
+volumes: # 定義するボリューム一覧
+  pgdata: # DBデータ用ボリューム名

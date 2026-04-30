@@ -1,10 +1,10 @@
-FROM python:3.11-slim
+FROM python:3.11-slim  # Python 3.11の軽量イメージを使用
 
-WORKDIR /app
+WORKDIR /app  # 作業ディレクトリを/appに設定
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt ./  # 依存関係ファイルをコピー
+RUN pip install --no-cache-dir -r requirements.txt  # 依存関係をインストール
 
-COPY . .
+COPY . .  # アプリのソース一式をコピー
 
-CMD ["python", "main.py"]
+CMD ["python", "main.py"]  # コンテナ起動時にPythonスクリプトを実行
