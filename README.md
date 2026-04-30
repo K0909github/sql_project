@@ -22,14 +22,20 @@ It includes:
 ## Setup (Docker)
 1. Start PostgreSQL with Docker Compose:
    - `docker compose up -d db`
-2. Run SQL files in order:
+   - This starts a `postgres:16` container and creates a named volume `pgdata` to persist data.
+2. (Optional) Reset the database completely:
+   - `docker compose down -v`
+   - This stops containers and removes the `pgdata` volume, so all DB data is wiped.
+3. Run SQL files in order:
    1. `schema.sql`
       - `psql -h localhost -U postgres -d testdb -f schema.sql`
    2. `insert.sql`
       - `psql -h localhost -U postgres -d testdb -f insert.sql`
    3. `analysis.sql` (optional, for manual checks)
       - `psql -h localhost -U postgres -d testdb -f analysis.sql`
-3. Run the Python app in Docker:
+   - When prompted for a password, enter `postgres`.
+   - If you see a connection error on port 5432, another local PostgreSQL may be running.
+4. Run the Python app in Docker:
    - `docker compose run --rm app`
 
 ## Example Output
@@ -61,14 +67,20 @@ It includes:
 ### セットアップ（Docker）
 1. Docker Compose で PostgreSQL を起動
    - `docker compose up -d db`
-2. 以下の順で SQL ファイルを実行
+   - `postgres:16` のコンテナが起動し、データは `pgdata` ボリュームに保存されます。
+2. （任意）DB を完全にリセットしたい場合
+   - `docker compose down -v`
+   - コンテナ停止 + `pgdata` ボリューム削除で、DB データが消えます。
+3. 以下の順で SQL ファイルを実行
    1. `schema.sql`
       - `psql -h localhost -U postgres -d testdb -f schema.sql`
    2. `insert.sql`
       - `psql -h localhost -U postgres -d testdb -f insert.sql`
    3. `analysis.sql`（手動確認用、任意）
       - `psql -h localhost -U postgres -d testdb -f analysis.sql`
-3. Python アプリを Docker で実行
+   - パスワード入力が出たら `postgres` を入力してください。
+   - 5432 ポートの接続エラーが出る場合、ローカルの PostgreSQL が起動中かもしれません。
+4. Python アプリを Docker で実行
    - `docker compose run --rm app`
 
 ### 実行結果
